@@ -1,0 +1,1231 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CIRCULA AI | Grupo 01 - SENAI</title>
+
+<style>
+:root {
+  --bg: #090a13;
+  --panel: #171529;
+  --panel2: #221e39;
+  --purple: #9264ff;
+  --lime: #c3ff4c;
+  --white: #f8f7ff;
+  --muted: #aaa7c1;
+  --border: #39334f;
+  --red: #ff7787;
+  --yellow: #ffd477;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--white);
+  font: 15px/1.6 'Segoe UI', system-ui, sans-serif;
+}
+
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+a { text-decoration: none; color: inherit; }
+
+.layout {
+  display: grid;
+  grid-template-columns: 235px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: #100f20;
+  border-right: 1px solid var(--border);
+  padding: 25px 17px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: 900;
+  margin-bottom: 35px;
+}
+
+.logo span { color: var(--lime); }
+
+.nav {
+  display: grid;
+  gap: 8px;
+}
+
+.nav a {
+  padding: 13px;
+  border-radius: 10px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.nav a:hover, .nav a.active {
+  background: #2b2348;
+  color: white;
+}
+
+.nav a.active {
+  border-left: 3px solid var(--lime);
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  background: var(--panel2);
+  padding: 16px;
+  border-radius: 13px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sidebar-bottom strong { color: var(--lime); }
+
+.main { min-width: 0; }
+
+.topbar {
+  background: #100f1b;
+  padding: 22px 35px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.online {
+  color: var(--lime);
+  font-size: 12px;
+}
+
+.content {
+  max-width: 1350px;
+  margin: auto;
+  padding: 30px 35px 70px;
+}
+
+.hero {
+  background:
+    radial-gradient(circle at 85% 30%, #6136ad, transparent 48%),
+    linear-gradient(120deg, #241a41, #17142c);
+  border: 1px solid #574780;
+  border-radius: 22px;
+  padding: 40px;
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  color: var(--lime);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.hero h1 {
+  font-size: clamp(28px, 4vw, 45px);
+  line-height: 1.2;
+  margin: 15px 0;
+}
+
+.hero h1 span { color: var(--lime); }
+
+.hero p {
+  color: #d1cbe4;
+  max-width: 650px;
+}
+
+.section-title { margin: 35px 0 17px; }
+.section-title h2 { margin: 0; font-size: 25px; }
+.section-title p { margin: 5px 0; color: var(--muted); }
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.metric, .card, .material-card, .flow-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 23px;
+}
+
+.metric {
+  border-top: 3px solid var(--purple);
+}
+
+.metric:nth-child(2) { border-top-color: var(--lime); }
+.metric:nth-child(3) { border-top-color: var(--yellow); }
+
+.metric .emoji { font-size: 26px; }
+.metric b { display: block; font-size: 33px; margin-top: 10px; }
+.metric small { color: var(--muted); }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.card h3 { margin-top: 0; }
+.card p { color: var(--muted); }
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 15px 0 6px;
+}
+
+input, select {
+  width: 100%;
+  min-width: 0;
+  background: #100f20;
+  border: 1px solid #4a4166;
+  padding: 13px;
+  color: white;
+  border-radius: 10px;
+}
+
+input:focus, select:focus {
+  outline: 2px solid var(--purple);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 17px;
+}
+
+button, .btn {
+  display: inline-block;
+  background: var(--purple);
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 17px;
+  color: white;
+  font-weight: 800;
+}
+
+button:hover, .btn:hover { filter: brightness(1.15); }
+
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.secondary {
+  background: #302746;
+  border: 1px solid #584879;
+}
+
+.btn-green {
+  background: var(--lime);
+  color: #10121a;
+}
+
+.result {
+  background: #100f20;
+  border: 1px solid #51466b;
+  border-radius: 13px;
+  min-height: 350px;
+  padding: 22px;
+}
+
+.result p {
+  color: #dfdaed;
+  font-size: 13px;
+}
+
+.result h3 { margin-top: 15px; }
+.result hr { border: 0; border-top: 1px solid var(--border); }
+
+.pill {
+  display: inline-block;
+  background: #c3ff4c20;
+  color: var(--lime);
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.pill.warn {
+  background: #ffd47720;
+  color: var(--yellow);
+}
+
+.pill.danger {
+  background: #ff778720;
+  color: var(--red);
+}
+
+.notice {
+  background: #ffd47710;
+  border-left: 3px solid var(--yellow);
+  padding: 13px;
+  border-radius: 8px;
+  color: #ffdfaa;
+  font-size: 12px;
+  margin-top: 17px;
+}
+
+.quick {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.quick button { font-size: 12px; }
+
+.materials, .flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.material-card h3, .flow-card h3 {
+  margin: 10px 0 5px;
+}
+
+.material-card p, .flow-card p {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.color-line {
+  height: 5px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.flow-number {
+  font-size: 12px;
+  color: var(--lime);
+  font-weight: 800;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th, td {
+  padding: 13px 9px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+th { color: var(--lime); }
+.scroll { overflow-x: auto; }
+
+.investment {
+  background: linear-gradient(120deg, #2b1e48, #171529);
+  border: 1px solid #574780;
+  border-radius: 17px;
+  padding: 27px;
+}
+
+.amount {
+  color: var(--lime);
+  font-size: 39px;
+  font-weight: 900;
+}
+
+.investment p { color: var(--muted); }
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 115px 1fr 55px;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+  font-size: 12px;
+}
+
+.bar-track {
+  background: #302846;
+  border-radius: 20px;
+  height: 9px;
+  overflow: hidden;
+}
+
+.bar-fill { height: 100%; border-radius: 20px; }
+
+#scanner { display: none; margin-top: 15px; }
+video { width: 100%; border-radius: 12px; }
+
+footer {
+  margin-top: 55px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 12px;
+}
+
+@media(max-width: 1050px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .materials, .flow { grid-template-columns: repeat(2,1fr); }
+}
+
+@media(max-width: 750px) {
+  .grid, .metrics { grid-template-columns: 1fr; }
+  .content { padding: 20px; }
+}
+
+@media(max-width: 500px) {
+  .materials, .flow, .form-row { grid-template-columns: 1fr; }
+  .hero { padding: 25px; }
+  .topbar { padding: 18px; }
+  .card { padding: 17px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+  <div class="logo">♻ CIRCULA <span>AI</span></div>
+
+  <nav class="nav">
+    <a class="active" href="#dashboard">▦ Visão Geral</a>
+    <a href="#inteligencia">🤖 CIRCULA CORE</a>
+    <a href="#materiais">♻ Materiais</a>
+    <a href="#logistica">🚛 Logística Reversa</a>
+    <a href="#relatorios">📊 Relatórios</a>
+    <a href="#investimento">💰 Investimento</a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <strong>● SENAI 2026</strong>
+    <p>Grupo 01 · ALP-T3</p>
+    <p>Projeto de Inovação Ambiental</p>
+  </div>
+</aside>
+
+<div class="main">
+
+<header class="topbar">
+  <strong>Centro de Gestão Ambiental</strong>
+  <span class="online">● MODO DEMONSTRAÇÃO</span>
+</header>
+
+<main class="content">
+
+<section class="hero">
+  <span class="eyebrow">INTELLIGENT WASTE MANAGEMENT</span>
+  <h1>
+    O futuro da indústria começa com<br>
+    <span>o descarte inteligente.</span>
+  </h1>
+  <p>
+    Identificação digital, segregação orientada
+    e monitoramento inteligente de resíduos
+    de embalagens industriais.
+  </p>
+  <a class="btn btn-green" href="#inteligencia">
+    🤖 Acessar CIRCULA CORE
+  </a>
+</section>
+
+<section id="dashboard">
+  <div class="section-title">
+    <h2>📊 Dashboard Operacional</h2>
+    <p>Indicadores dos resíduos registrados.</p>
+  </div>
+
+  <div class="metrics">
+    <div class="metric">
+      <span class="emoji">⚖️</span>
+      <b id="total">0 kg</b>
+      <small>Total registrado</small>
+    </div>
+
+    <div class="metric">
+      <span class="emoji">📦</span>
+      <b id="count">0</b>
+      <small>Descartes cadastrados</small>
+    </div>
+
+    <div class="metric">
+      <span class="emoji">⚠️</span>
+      <b id="alerts">0</b>
+      <small>Registros para avaliação técnica</small>
+    </div>
+  </div>
+</section>
+
+<section id="inteligencia">
+  <div class="section-title">
+    <h2>🤖 CIRCULA CORE</h2>
+    <p>Assistente inteligente de segregação industrial.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>🔎 Identificação da Embalagem</h3>
+      <p>Informe os dados ou consulte um código cadastrado.</p>
+
+      <label for="code">Código QR / Embalagem</label>
+      <input id="code" placeholder="Ex.: PAP001" maxlength="50">
+
+      <div class="actions">
+        <button id="lookup">Consultar Código</button>
+        <button id="scan" class="secondary">📷 Ler QR</button>
+      </div>
+
+      <div class="quick">
+        <button class="secondary" data-demo="PAP001">PAP001</button>
+        <button class="secondary" data-demo="PLA001">PLA001</button>
+        <button class="secondary" data-demo="QUI001">QUI001</button>
+        <button class="secondary" data-demo="VID001">VID001</button>
+        <button class="secondary" data-demo="MET001">MET001</button>
+      </div>
+
+      <div id="scanner">
+        <video id="video" autoplay playsinline muted></video>
+        <button id="stop" class="secondary">Parar câmera</button>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label for="material">Material</label>
+          <select id="material">
+            <option value="papel">Papel / Papelão</option>
+            <option value="plastico">Plástico</option>
+            <option value="vidro">Vidro</option>
+            <option value="metal">Metal</option>
+            <option value="outro">Desconhecido</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="weight">Peso (kg)</label>
+          <input id="weight" type="number" min="0.01"
+                 max="100000" step="0.01" value="10">
+        </div>
+      </div>
+
+      <label for="contamination">Condição da embalagem</label>
+      <select id="contamination">
+        <option value="nao">Sem contaminação perigosa conhecida</option>
+        <option value="sim">Contaminada / Produto perigoso</option>
+        <option value="incerta">Contaminação desconhecida</option>
+      </select>
+
+      <label for="description">Descrição / Conteúdo anterior</label>
+      <input id="description"
+             placeholder="Ex.: galão químico, caixa limpa">
+
+      <div class="actions">
+        <button class="primary" id="analyze">🤖 Analisar Embalagem</button>
+        <button class="secondary" id="save" disabled>
+          💾 Registrar Descarte
+        </button>
+      </div>
+
+      <div class="notice">
+        ⚠️ Diagnóstico preliminar baseado em regras.
+        Não substitui avaliação técnica de periculosidade.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🧠 Diagnóstico Inteligente</h3>
+      <p>Resultados da análise realizada pelo CIRCULA CORE.</p>
+
+      <div class="result" id="result">
+        <span class="pill">AGUARDANDO ANÁLISE</span>
+        <h3>CIRCULA CORE pronto.</h3>
+        <p>Selecione uma embalagem para iniciar.</p>
+        <p>O sistema apresentará:</p>
+        <ul>
+          <li>Material identificado</li>
+          <li>Orientação de classificação</li>
+          <li>Coletor recomendado</li>
+          <li>Segregação e armazenamento</li>
+          <li>Movimentação e destinação</li>
+          <li>Alertas de segurança</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-title">
+    <h2>📈 Distribuição dos Materiais</h2>
+    <p>Participação em peso dos materiais registrados.</p>
+  </div>
+  <div class="card" id="materialBars">
+    <p>Nenhum dado registrado.</p>
+  </div>
+</section>
+
+<section id="materiais">
+  <div class="section-title">
+    <h2>♻️ Classificação de Materiais</h2>
+    <p>Cores dos coletores conforme CONAMA 275/2001.</p>
+  </div>
+
+  <div class="materials">
+    <div class="material-card">
+      <div class="color-line" style="background:#2987ff"></div>
+      <h3>📄 Papel e Papelão</h3>
+      <p>Caixas e embalagens adequadas.</p>
+      <strong style="color:#69adff">Coletor Azul</strong>
+    </div>
+
+    <div class="material-card">
+      <div class="color-line" style="background:#ff5266"></div>
+      <h3>🧴 Plástico</h3>
+      <p>Embalagens plásticas adequadas.</p>
+      <strong style="color:#ff8290">Coletor Vermelho</strong>
+    </div>
+
+    <div class="material-card">
+      <div class="color-line" style="background:#21c775"></div>
+      <h3>🍾 Vidro</h3>
+      <p>Garrafas e frascos adequados.</p>
+      <strong style="color:#5de69e">Coletor Verde</strong>
+    </div>
+
+    <div class="material-card">
+      <div class="color-line" style="background:#ffd43b"></div>
+      <h3>🥫 Metal</h3>
+      <p>Latas e embalagens metálicas.</p>
+      <strong style="color:#ffe27b">Coletor Amarelo</strong>
+    </div>
+  </div>
+
+  <div class="notice">
+    Embalagens contaminadas ou de origem desconhecida
+    precisam de avaliação antes do encaminhamento
+    à coleta seletiva comum.
+  </div>
+</section>
+
+<section id="logistica">
+  <div class="section-title">
+    <h2>🚛 Logística Reversa</h2>
+    <p>Fluxo operacional proposto para a indústria.</p>
+  </div>
+
+  <div class="flow">
+    <div class="flow-card">
+      <span class="flow-number">ETAPA 01</span>
+      <h3>📱 Identificação</h3>
+      <p>Consulta por QR Code ou identificação manual.</p>
+    </div>
+
+    <div class="flow-card">
+      <span class="flow-number">ETAPA 02</span>
+      <h3>🔎 Classificação</h3>
+      <p>Identificação do material e possíveis riscos.</p>
+    </div>
+
+    <div class="flow-card">
+      <span class="flow-number">ETAPA 03</span>
+      <h3>♻️ Segregação</h3>
+      <p>Separação na origem em recipientes identificados.</p>
+    </div>
+
+    <div class="flow-card">
+      <span class="flow-number">ETAPA 04</span>
+      <h3>📦 Acondicionamento</h3>
+      <p>Proteção contra mistura, vazamentos e acidentes.</p>
+    </div>
+
+    <div class="flow-card">
+      <span class="flow-number">ETAPA 05</span>
+      <h3>🏭 Armazenamento</h3>
+      <p>Área temporária adequada e sinalizada.</p>
+    </div>
+
+    <div class="flow-card">
+      <span class="flow-number">ETAPA 06</span>
+      <h3>🚚 Movimentação</h3>
+      <p>Carrinhos, paleteiras e parceiros de transporte.</p>
+    </div>
+
+    <div class="flow-card">
+      <span class="flow-number">ETAPA 07</span>
+      <h3>🌱 Destinação</h3>
+      <p>Recicladoras, cooperativas ou operadores autorizados.</p>
+    </div>
+
+    <div class="flow-card">
+      <span class="flow-number">ETAPA 08</span>
+      <h3>📊 Monitoramento</h3>
+      <p>Registro de dados, histórico e indicadores.</p>
+    </div>
+  </div>
+</section>
+
+<section id="relatorios">
+  <div class="section-title">
+    <h2>📋 Relatórios Operacionais</h2>
+    <p>Histórico dos descartes realizados.</p>
+  </div>
+
+  <div class="card">
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Código</th>
+            <th>Material</th>
+            <th>Peso</th>
+            <th>Situação</th>
+          </tr>
+        </thead>
+        <tbody id="history">
+          <tr><td colspan="5">Nenhum registro.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="actions">
+      <button id="export">📥 Exportar CSV</button>
+      <button id="reset" class="secondary">🗑️ Limpar Dados</button>
+    </div>
+
+    <p>Os registros são armazenados neste navegador.</p>
+  </div>
+</section>
+
+<section id="investimento">
+  <div class="section-title">
+    <h2>💰 Investimento e Modelo de Negócio</h2>
+    <p>Plano de implantação do Grupo 01.</p>
+  </div>
+
+  <div class="grid">
+    <div class="investment">
+      <span class="eyebrow">INVESTIMENTO SOLICITADO</span>
+      <div class="amount">R$ 30.000</div>
+      <p>Valor estimado para implantação e validação.</p>
+      <h3>Metas dos primeiros seis meses</h3>
+      <ul>
+        <li>Atender cinco pequenas indústrias</li>
+        <li>Buscar redução de 20% nos erros de segregação</li>
+        <li>Validar a operação e o modelo comercial</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>📈 Modelo de Receita</h3>
+      <p>Assinaturas mensais projetadas de R$ 49 a R$ 199.</p>
+      <p>Clientes: pequenas e médias indústrias.</p>
+      <p>Coleta física feita por parceiros habilitados.</p>
+
+      <h3>⚠️ Riscos</h3>
+      <p>Custos de implantação, erros de cadastro, resistência
+      dos funcionários e dependência de parceiros.</p>
+
+      <p><small>Valores e resultados são projeções educacionais.</small></p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-title">
+    <h2>⚖️ Normas e Responsabilidade</h2>
+  </div>
+
+  <div class="card">
+    <p><strong>Lei 12.305/2010:</strong> Política Nacional de Resíduos Sólidos.</p>
+    <p><strong>Decreto 10.936/2022:</strong> Regulamentação da política nacional.</p>
+    <p><strong>CONAMA 275/2001:</strong> Código de cores para coletores.</p>
+    <p><strong>ABNT NBR 10004:</strong> Classificação de resíduos.</p>
+    <p>Documentos de transporte e destinação deverão ser
+    observados quando legalmente exigidos.</p>
+  </div>
+</section>
+
+<footer>
+  CIRCULA AI · Grupo 01 · ALP-T3 · SENAI 2026
+  <p>Inteligência que transforma resíduos em recursos.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+"use strict";
+
+// CIRCULA AI — SISTEMA DE DEMONSTRAÇÃO
+
+const $ = id => document.getElementById(id);
+
+const catalog = {
+  PAP001: {
+    material: "papel",
+    contamination: "nao",
+    description: "Caixa de papelão limpa"
+  },
+  PLA001: {
+    material: "plastico",
+    contamination: "nao",
+    description: "Garrafa PET limpa"
+  },
+  QUI001: {
+    material: "plastico",
+    contamination: "sim",
+    description: "Galão com resíduo químico"
+  },
+  VID001: {
+    material: "vidro",
+    contamination: "nao",
+    description: "Frasco de vidro limpo"
+  },
+  MET001: {
+    material: "metal",
+    contamination: "nao",
+    description: "Lata metálica limpa"
+  }
+};
+
+const rules = {
+  papel: {
+    name: "Papel e papelão",
+    color: "Azul",
+    storage: "Local seco e protegido da chuva.",
+    destination: "Cooperativa ou recicladora de papel."
+  },
+  plastico: {
+    name: "Plástico",
+    color: "Vermelho",
+    storage: "Recipiente identificado e protegido.",
+    destination: "Cooperativa ou recicladora de plástico."
+  },
+  vidro: {
+    name: "Vidro",
+    color: "Verde",
+    storage: "Recipiente resistente, evitando quebras e cortes.",
+    destination: "Recicladora de vidro."
+  },
+  metal: {
+    name: "Metal",
+    color: "Amarelo",
+    storage: "Recipiente seguro, sem pontas cortantes expostas.",
+    destination: "Recicladora de metais."
+  }
+};
+
+let records = [];
+let current = null;
+let cameraStream = null;
+
+try {
+  records = JSON.parse(
+    localStorage.getItem("circula_records") || "[]"
+  );
+  if (!Array.isArray(records)) records = [];
+} catch {
+  records = [];
+}
+
+function safe(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[c]));
+}
+
+function numberBR(value) {
+  return Number(value).toLocaleString("pt-BR", {
+    maximumFractionDigits: 2
+  });
+}
+
+function showCode() {
+  const code = $("code").value.trim().toUpperCase();
+  const item = catalog[code];
+
+  if (!item) {
+    current = null;
+    $("save").disabled = true;
+    $("material").value = "outro";
+    $("contamination").value = "incerta";
+    $("description").value = "";
+    alert("Código desconhecido. Informe os dados manualmente.");
+    return;
+  }
+
+  $("material").value = item.material;
+  $("contamination").value = item.contamination;
+  $("description").value = item.description;
+  $("code").value = code;
+
+  analyze();
+}
+
+function analyze() {
+  current = null;
+  $("save").disabled = true;
+
+  const code = $("code").value.trim().toUpperCase() || "MANUAL";
+  const known = catalog[code];
+
+  let material = $("material").value;
+  let contamination = $("contamination").value;
+
+  const weight = Number($("weight").value);
+  const description = $("description").value.trim();
+
+  if (!Number.isFinite(weight) || weight <= 0 || weight > 100000) {
+    alert("Informe um peso válido entre 0 e 100.000 kg.");
+    return;
+  }
+
+  // Impede liberar um código conhecido como contaminado.
+  if (known && known.contamination === "sim") {
+    contamination = "sim";
+    $("contamination").value = "sim";
+  }
+
+  // Para códigos cadastrados, usa o material do catálogo.
+  if (known) {
+    material = known.material;
+    $("material").value = material;
+  }
+
+  const rule = rules[material];
+
+  const blocked = contamination !== "nao" || !rule;
+
+  const status = blocked
+    ? contamination === "sim"
+      ? "POSSÍVEL CONTAMINAÇÃO PERIGOSA"
+      : "AVALIAÇÃO TÉCNICA NECESSÁRIA"
+    : "SEGREGAÇÃO ORIENTADA";
+
+  const level = blocked
+    ? contamination === "sim" ? "danger" : "warn"
+    : "";
+
+  const category = rule?.name || "Material desconhecido";
+
+  const collector = blocked
+    ? "Não utilizar coleta seletiva comum sem avaliação."
+    : rule.color;
+
+  const segregation = blocked
+    ? "Isolar e não misturar com recicláveis comuns."
+    : "Separar na origem por tipo de material.";
+
+  const storage = blocked
+    ? "Área identificada e compatível com o risco; consultar responsável técnico."
+    : rule.storage;
+
+  const movement = blocked
+    ? "Definir procedimentos de movimentação após avaliação dos riscos."
+    : "Carrinhos ou paleteiras adequados; coleta externa por parceiro habilitado.";
+
+  const destination = blocked
+    ? "Definir destinação com responsável técnico e operador autorizado."
+    : rule.destination;
+
+  current = {
+    date: new Date().toLocaleString("pt-BR"),
+    code,
+    material: category,
+    weight,
+    status,
+    flag: blocked
+  };
+
+  $("result").innerHTML = `
+    <span class="pill ${level}">${safe(status)}</span>
+    <h3>${safe(category)} · ${numberBR(weight)} kg</h3>
+    <hr>
+    <p><strong>Código:</strong> ${safe(code)}</p>
+    <p><strong>Coletor:</strong> ${safe(collector)}</p>
+    <p><strong>Segregação:</strong> ${safe(segregation)}</p>
+    <p><strong>Armazenamento:</strong> ${safe(storage)}</p>
+    <p><strong>Movimentação:</strong> ${safe(movement)}</p>
+    <p><strong>Destinação:</strong> ${safe(destination)}</p>
+    <p><strong>Descrição:</strong> ${safe(description || "Não informada")}</p>
+    <hr>
+    <p><small>
+      Diagnóstico automatizado preliminar.
+      A periculosidade não é certificada por este sistema.
+    </small></p>
+  `;
+
+  $("save").disabled = false;
+}
+
+function render() {
+  const total = records.reduce(
+    (sum, r) => sum + Number(r.weight || 0), 0
+  );
+
+  $("total").textContent = numberBR(total) + " kg";
+  $("count").textContent = records.length;
+  $("alerts").textContent = records.filter(r => r.flag).length;
+
+  $("history").innerHTML = records.length
+    ? records.slice().reverse().map(r => `
+      <tr>
+        <td>${safe(r.date)}</td>
+        <td>${safe(r.code)}</td>
+        <td>${safe(r.material)}</td>
+        <td>${numberBR(r.weight)} kg</td>
+        <td>${safe(r.status)}</td>
+      </tr>
+    `).join("")
+    : '<tr><td colspan="5">Nenhum descarte registrado.</td></tr>';
+
+  renderBars();
+}
+
+function renderBars() {
+  const weights = {};
+
+  records.forEach(r => {
+    weights[r.material] =
+      (weights[r.material] || 0) + Number(r.weight);
+  });
+
+  const total = Object.values(weights)
+    .reduce((a, b) => a + b, 0);
+
+  if (!total) {
+    $("materialBars").innerHTML =
+      "<p>Registre um descarte para visualizar os indicadores.</p>";
+    return;
+  }
+
+  const colors = {
+    "Papel e papelão": "#2987ff",
+    "Plástico": "#ff5266",
+    "Vidro": "#21c775",
+    "Metal": "#ffd43b"
+  };
+
+  $("materialBars").innerHTML =
+    Object.entries(weights).map(([material, weight]) => {
+      const pct = weight / total * 100;
+      const color = colors[material] || "#9264ff";
+
+      return `
+        <div class="bar-row">
+          <span>${safe(material)}</span>
+          <div class="bar-track">
+            <div class="bar-fill"
+              style="width:${pct}%;background:${color}">
+            </div>
+          </div>
+          <strong>${Math.round(pct)}%</strong>
+        </div>
+      `;
+    }).join("");
+}
+
+$("lookup").onclick = showCode;
+
+document.querySelectorAll("[data-demo]").forEach(button => {
+  button.onclick = () => {
+    $("code").value = button.dataset.demo;
+    showCode();
+  };
+});
+
+$("analyze").onclick = analyze;
+
+$("save").onclick = () => {
+  if (!current) return;
+
+  records.push({ ...current });
+
+  try {
+    localStorage.setItem(
+      "circula_records", JSON.stringify(records)
+    );
+  } catch {
+    alert("Não foi possível salvar no navegador.");
+    records.pop();
+    return;
+  }
+
+  current = null;
+  $("save").disabled = true;
+
+  render();
+  alert("Descarte registrado com sucesso!");
+};
+
+$("reset").onclick = () => {
+  if (!confirm("Deseja apagar os registros locais?")) return;
+
+  records = [];
+  localStorage.removeItem("circula_records");
+  render();
+};
+
+$("export").onclick = () => {
+  const rows = [
+    ["Data", "Código", "Material", "Peso (kg)", "Situação"],
+    ...records.map(r => [
+      r.date, r.code, r.material, r.weight, r.status
+    ])
+  ];
+
+  // Proteção contra fórmulas ao abrir o CSV em planilhas.
+  const cell = v => {
+    let s = String(v ?? "");
+    if (/^[\s]*[=+\-@]/.test(s)) s = "'" + s;
+    return '"' + s.replaceAll('"', '""') + '"';
+  };
+
+  const csv = "\ufeff" + rows.map(row =>
+    row.map(cell).join(";")
+  ).join("\r\n");
+
+  const blob = new Blob([csv], {
+    type: "text/csv;charset=utf-8"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "circula_ai_relatorio.csv";
+  link.click();
+
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+};
+
+// LEITOR QR CODE
+
+function stopCamera() {
+  if (cameraStream) {
+    cameraStream.getTracks().forEach(track => track.stop());
+  }
+
+  cameraStream = null;
+  $("scanner").style.display = "none";
+}
+
+$("stop").onclick = stopCamera;
+
+$("scan").onclick = async () => {
+  if (!("BarcodeDetector" in window)) {
+    alert("Leitura QR não suportada. Use o código manual.");
+    return;
+  }
+
+  try {
+    const formats = await BarcodeDetector.getSupportedFormats();
+
+    if (!formats.includes("qr_code")) {
+      throw new Error("QR Code indisponível.");
+    }
+
+    const detector = new BarcodeDetector({
+      formats: ["qr_code"]
+    });
+
+    cameraStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment" }
+    });
+
+    $("video").srcObject = cameraStream;
+    $("scanner").style.display = "block";
+
+    async function scanLoop() {
+      if (!cameraStream) return;
+
+      try {
+        if ($("video").readyState >= 2) {
+          const codes = await detector.detect($("video"));
+
+          if (codes.length > 0) {
+            let value = codes[0].rawValue;
+
+            try {
+              const url = new URL(value);
+              value = url.searchParams.get("codigo") || value;
+            } catch {}
+
+            $("code").value = value.trim().toUpperCase();
+
+            stopCamera();
+            showCode();
+            return;
+          }
+        }
+      } catch (error) {
+        console.warn("Leitura QR:", error);
+      }
+
+      if (cameraStream) requestAnimationFrame(scanLoop);
+    }
+
+    requestAnimationFrame(scanLoop);
+
+  } catch {
+    stopCamera();
+    alert("Não foi possível acessar a câmera.");
+  }
+};
+
+// DESABILITA REGISTRO SE O FORMULÁRIO MUDAR
+
+["code", "material", "weight",
+ "contamination", "description"].forEach(id => {
+  ["input", "change"].forEach(eventName => {
+    $(id).addEventListener(eventName, () => {
+      current = null;
+      $("save").disabled = true;
+    });
+  });
+});
+
+// IDENTIFICAÇÃO POR URL QR
+
+try {
+  const code = new URL(window.location.href)
+    .searchParams.get("codigo");
+
+  if (code) {
+    $("code").value = code;
+    showCode();
+  }
+} catch {}
+
+render();
+</script>
+
+</body>
+</html>
